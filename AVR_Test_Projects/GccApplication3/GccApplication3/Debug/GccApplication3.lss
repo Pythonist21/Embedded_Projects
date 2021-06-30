@@ -1,0 +1,162 @@
+
+GccApplication3.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000096  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .comment      00000030  00000000  00000000  000000ea  2**0
+                  CONTENTS, READONLY
+  2 .debug_aranges 00000038  00000000  00000000  0000011a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_info   000000d5  00000000  00000000  00000152  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 0000007e  00000000  00000000  00000227  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   00000083  00000000  00000000  000002a5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_frame  00000064  00000000  00000000  00000328  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    00000191  00000000  00000000  0000038c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_loc    0000003c  00000000  00000000  0000051d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_ranges 00000028  00000000  00000000  00000559  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	19 c0       	rjmp	.+50     	; 0x36 <__bad_interrupt>
+   4:	18 c0       	rjmp	.+48     	; 0x36 <__bad_interrupt>
+   6:	17 c0       	rjmp	.+46     	; 0x36 <__bad_interrupt>
+   8:	16 c0       	rjmp	.+44     	; 0x36 <__bad_interrupt>
+   a:	15 c0       	rjmp	.+42     	; 0x36 <__bad_interrupt>
+   c:	14 c0       	rjmp	.+40     	; 0x36 <__bad_interrupt>
+   e:	13 c0       	rjmp	.+38     	; 0x36 <__bad_interrupt>
+  10:	12 c0       	rjmp	.+36     	; 0x36 <__bad_interrupt>
+  12:	11 c0       	rjmp	.+34     	; 0x36 <__bad_interrupt>
+  14:	10 c0       	rjmp	.+32     	; 0x36 <__bad_interrupt>
+  16:	10 c0       	rjmp	.+32     	; 0x38 <__vector_11>
+  18:	0e c0       	rjmp	.+28     	; 0x36 <__bad_interrupt>
+  1a:	0d c0       	rjmp	.+26     	; 0x36 <__bad_interrupt>
+  1c:	0c c0       	rjmp	.+24     	; 0x36 <__bad_interrupt>
+  1e:	0b c0       	rjmp	.+22     	; 0x36 <__bad_interrupt>
+  20:	0a c0       	rjmp	.+20     	; 0x36 <__bad_interrupt>
+  22:	09 c0       	rjmp	.+18     	; 0x36 <__bad_interrupt>
+  24:	08 c0       	rjmp	.+16     	; 0x36 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+  32:	2b d0       	rcall	.+86     	; 0x8a <main>
+  34:	2e c0       	rjmp	.+92     	; 0x92 <_exit>
+
+00000036 <__bad_interrupt>:
+  36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
+
+00000038 <__vector_11>:
+#include <util/delay.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+ISR(USART_RXC_vect)
+{
+  38:	1f 92       	push	r1
+  3a:	0f 92       	push	r0
+  3c:	0f b6       	in	r0, 0x3f	; 63
+  3e:	0f 92       	push	r0
+  40:	11 24       	eor	r1, r1
+  42:	8f 93       	push	r24
+	switch(UDR)
+  44:	8c b1       	in	r24, 0x0c	; 12
+  46:	80 33       	cpi	r24, 0x30	; 48
+  48:	29 f0       	breq	.+10     	; 0x54 <__SREG__+0x15>
+  4a:	81 33       	cpi	r24, 0x31	; 49
+  4c:	29 f4       	brne	.+10     	; 0x58 <__SREG__+0x19>
+	{
+		case '1':
+		PORTC = (1<<PC0) | (1<<PC1);
+  4e:	83 e0       	ldi	r24, 0x03	; 3
+  50:	85 bb       	out	0x15, r24	; 21
+		break;
+  52:	04 c0       	rjmp	.+8      	; 0x5c <__SREG__+0x1d>
+		case '0':
+		PORTC = 0x00;
+  54:	15 ba       	out	0x15, r1	; 21
+		break;
+  56:	02 c0       	rjmp	.+4      	; 0x5c <__SREG__+0x1d>
+		default:
+		PORTB =(1<<PB0);
+  58:	81 e0       	ldi	r24, 0x01	; 1
+  5a:	88 bb       	out	0x18, r24	; 24
+		break;
+	}
+}
+  5c:	8f 91       	pop	r24
+  5e:	0f 90       	pop	r0
+  60:	0f be       	out	0x3f, r0	; 63
+  62:	0f 90       	pop	r0
+  64:	1f 90       	pop	r1
+  66:	18 95       	reti
+
+00000068 <_Z6presetv>:
+void preset()
+{
+	DDRD =(0<<PD0);  //rx на вход
+  68:	11 ba       	out	0x11, r1	; 17
+	DDRD = (1<<PD1);    //tx на выход
+  6a:	82 e0       	ldi	r24, 0x02	; 2
+  6c:	81 bb       	out	0x11, r24	; 17
+	DDRC=0xFF;
+  6e:	8f ef       	ldi	r24, 0xFF	; 255
+  70:	84 bb       	out	0x14, r24	; 20
+	PORTC=0x00;
+  72:	15 ba       	out	0x15, r1	; 21
+	DDRB=(1<<PB0);
+  74:	81 e0       	ldi	r24, 0x01	; 1
+  76:	87 bb       	out	0x17, r24	; 23
+  78:	08 95       	ret
+
+0000007a <_Z9blut_initv>:
+}
+void blut_init()
+{
+	//разрешаем прием, передачу, прерывание по приёму
+	UCSRB = (1<<RXEN)|(1<<TXEN)|(1<<RXCIE)|(0<<UDRIE);
+  7a:	88 e9       	ldi	r24, 0x98	; 152
+  7c:	8a b9       	out	0x0a, r24	; 10
+	//8 бит данных, 1 стоп бит, без контроля четности
+	UCSRC = (1<<URSEL)|(1<<UCSZ0)|(1<<UCSZ1);
+  7e:	86 e8       	ldi	r24, 0x86	; 134
+  80:	80 bd       	out	0x20, r24	; 32
+	//Baud Rate: 9600
+	UBRRL = 0x33;
+  82:	83 e3       	ldi	r24, 0x33	; 51
+  84:	89 b9       	out	0x09, r24	; 9
+	UBRRH = 0x00;
+  86:	10 bc       	out	0x20, r1	; 32
+  88:	08 95       	ret
+
+0000008a <main>:
+}
+int main(void)
+{
+	preset();
+  8a:	ee df       	rcall	.-36     	; 0x68 <_Z6presetv>
+	blut_init();
+  8c:	f6 df       	rcall	.-20     	; 0x7a <_Z9blut_initv>
+	sei();
+  8e:	78 94       	sei
+  90:	ff cf       	rjmp	.-2      	; 0x90 <main+0x6>
+
+00000092 <_exit>:
+  92:	f8 94       	cli
+
+00000094 <__stop_program>:
+  94:	ff cf       	rjmp	.-2      	; 0x94 <__stop_program>

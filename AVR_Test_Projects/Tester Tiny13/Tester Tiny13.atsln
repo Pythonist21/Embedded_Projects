@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Tester Tiny13", "Tester Tiny13\Tester Tiny13.cproj", "{F9845420-053D-4504-B3AD-B6217443011D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9845420-053D-4504-B3AD-B6217443011D}.Debug|AVR.ActiveCfg = Debug|AVR
+		{F9845420-053D-4504-B3AD-B6217443011D}.Debug|AVR.Build.0 = Debug|AVR
+		{F9845420-053D-4504-B3AD-B6217443011D}.Release|AVR.ActiveCfg = Release|AVR
+		{F9845420-053D-4504-B3AD-B6217443011D}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

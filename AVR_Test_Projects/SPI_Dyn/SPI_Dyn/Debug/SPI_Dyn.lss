@@ -1,0 +1,604 @@
+
+SPI_Dyn.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000304  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          00000005  00800060  00800060  00000378  2**0
+                  ALLOC
+  2 .comment      00000030  00000000  00000000  00000378  2**0
+                  CONTENTS, READONLY
+  3 .debug_aranges 00000090  00000000  00000000  000003a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   00000485  00000000  00000000  00000438  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 000002ae  00000000  00000000  000008bd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   000003e6  00000000  00000000  00000b6b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  00000114  00000000  00000000  00000f54  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    000001f6  00000000  00000000  00001068  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    000003c7  00000000  00000000  0000125e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000060  00000000  00000000  00001625  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	1c c0       	rjmp	.+56     	; 0x3a <__ctors_end>
+   2:	2b c0       	rjmp	.+86     	; 0x5a <__bad_interrupt>
+   4:	2a c0       	rjmp	.+84     	; 0x5a <__bad_interrupt>
+   6:	29 c0       	rjmp	.+82     	; 0x5a <__bad_interrupt>
+   8:	28 c0       	rjmp	.+80     	; 0x5a <__bad_interrupt>
+   a:	27 c0       	rjmp	.+78     	; 0x5a <__bad_interrupt>
+   c:	dc c0       	rjmp	.+440    	; 0x1c6 <__vector_6>
+   e:	25 c0       	rjmp	.+74     	; 0x5a <__bad_interrupt>
+  10:	24 c0       	rjmp	.+72     	; 0x5a <__bad_interrupt>
+  12:	23 c0       	rjmp	.+70     	; 0x5a <__bad_interrupt>
+  14:	22 c0       	rjmp	.+68     	; 0x5a <__bad_interrupt>
+  16:	21 c0       	rjmp	.+66     	; 0x5a <__bad_interrupt>
+  18:	20 c0       	rjmp	.+64     	; 0x5a <__bad_interrupt>
+  1a:	1f c0       	rjmp	.+62     	; 0x5a <__bad_interrupt>
+  1c:	1e c0       	rjmp	.+60     	; 0x5a <__bad_interrupt>
+  1e:	1d c0       	rjmp	.+58     	; 0x5a <__bad_interrupt>
+  20:	1c c0       	rjmp	.+56     	; 0x5a <__bad_interrupt>
+  22:	1b c0       	rjmp	.+54     	; 0x5a <__bad_interrupt>
+  24:	1a c0       	rjmp	.+52     	; 0x5a <__bad_interrupt>
+  26:	ca c0       	rjmp	.+404    	; 0x1bc <segchar+0x6a>
+  28:	9c c0       	rjmp	.+312    	; 0x162 <segchar+0x10>
+  2a:	a0 c0       	rjmp	.+320    	; 0x16c <segchar+0x1a>
+  2c:	a4 c0       	rjmp	.+328    	; 0x176 <segchar+0x24>
+  2e:	a8 c0       	rjmp	.+336    	; 0x180 <segchar+0x2e>
+  30:	ac c0       	rjmp	.+344    	; 0x18a <segchar+0x38>
+  32:	b0 c0       	rjmp	.+352    	; 0x194 <segchar+0x42>
+  34:	b4 c0       	rjmp	.+360    	; 0x19e <segchar+0x4c>
+  36:	b8 c0       	rjmp	.+368    	; 0x1a8 <segchar+0x56>
+  38:	bc c0       	rjmp	.+376    	; 0x1b2 <segchar+0x60>
+
+0000003a <__ctors_end>:
+  3a:	11 24       	eor	r1, r1
+  3c:	1f be       	out	0x3f, r1	; 63
+  3e:	cf e5       	ldi	r28, 0x5F	; 95
+  40:	d4 e0       	ldi	r29, 0x04	; 4
+  42:	de bf       	out	0x3e, r29	; 62
+  44:	cd bf       	out	0x3d, r28	; 61
+
+00000046 <__do_clear_bss>:
+  46:	20 e0       	ldi	r18, 0x00	; 0
+  48:	a0 e6       	ldi	r26, 0x60	; 96
+  4a:	b0 e0       	ldi	r27, 0x00	; 0
+  4c:	01 c0       	rjmp	.+2      	; 0x50 <.do_clear_bss_start>
+
+0000004e <.do_clear_bss_loop>:
+  4e:	1d 92       	st	X+, r1
+
+00000050 <.do_clear_bss_start>:
+  50:	a5 36       	cpi	r26, 0x65	; 101
+  52:	b2 07       	cpc	r27, r18
+  54:	e1 f7       	brne	.-8      	; 0x4e <.do_clear_bss_loop>
+  56:	22 d1       	rcall	.+580    	; 0x29c <main>
+  58:	53 c1       	rjmp	.+678    	; 0x300 <_exit>
+
+0000005a <__bad_interrupt>:
+  5a:	d2 cf       	rjmp	.-92     	; 0x0 <__vectors>
+
+0000005c <timer_init>:
+	}
+}
+
+void timer_init(unsigned int speed)
+{
+	TCCR1B |=(1<<WGM12);
+  5c:	9e b5       	in	r25, 0x2e	; 46
+  5e:	98 60       	ori	r25, 0x08	; 8
+  60:	9e bd       	out	0x2e, r25	; 46
+	TIMSK |=(1<<OCIE1A);
+  62:	99 b7       	in	r25, 0x39	; 57
+  64:	90 61       	ori	r25, 0x10	; 16
+  66:	99 bf       	out	0x39, r25	; 57
+	OCR1AH = speed; //записываем в регистр число для сравнения
+  68:	8b bd       	out	0x2b, r24	; 43
+	OCR1AL = 0b00000000;
+  6a:	1a bc       	out	0x2a, r1	; 42
+	TCCR1B |=(1<<CS11);
+  6c:	8e b5       	in	r24, 0x2e	; 46
+  6e:	82 60       	ori	r24, 0x02	; 2
+  70:	8e bd       	out	0x2e, r24	; 46
+  72:	08 95       	ret
+
+00000074 <led_print>:
+}
+
+void led_print(unsigned int number)
+{
+  74:	ac 01       	movw	r20, r24
+	R1 = number%10;
+  76:	9c 01       	movw	r18, r24
+  78:	ad ec       	ldi	r26, 0xCD	; 205
+  7a:	bc ec       	ldi	r27, 0xCC	; 204
+  7c:	35 d1       	rcall	.+618    	; 0x2e8 <__umulhisi3>
+  7e:	96 95       	lsr	r25
+  80:	87 95       	ror	r24
+  82:	96 95       	lsr	r25
+  84:	87 95       	ror	r24
+  86:	96 95       	lsr	r25
+  88:	87 95       	ror	r24
+  8a:	9c 01       	movw	r18, r24
+  8c:	22 0f       	add	r18, r18
+  8e:	33 1f       	adc	r19, r19
+  90:	88 0f       	add	r24, r24
+  92:	99 1f       	adc	r25, r25
+  94:	88 0f       	add	r24, r24
+  96:	99 1f       	adc	r25, r25
+  98:	88 0f       	add	r24, r24
+  9a:	99 1f       	adc	r25, r25
+  9c:	82 0f       	add	r24, r18
+  9e:	93 1f       	adc	r25, r19
+  a0:	9a 01       	movw	r18, r20
+  a2:	28 1b       	sub	r18, r24
+  a4:	39 0b       	sbc	r19, r25
+  a6:	20 93 64 00 	sts	0x0064, r18
+	R2 = number%100/10;
+  aa:	9a 01       	movw	r18, r20
+  ac:	36 95       	lsr	r19
+  ae:	27 95       	ror	r18
+  b0:	36 95       	lsr	r19
+  b2:	27 95       	ror	r18
+  b4:	ab e7       	ldi	r26, 0x7B	; 123
+  b6:	b4 e1       	ldi	r27, 0x14	; 20
+  b8:	17 d1       	rcall	.+558    	; 0x2e8 <__umulhisi3>
+  ba:	96 95       	lsr	r25
+  bc:	87 95       	ror	r24
+  be:	64 e6       	ldi	r22, 0x64	; 100
+  c0:	68 9f       	mul	r22, r24
+  c2:	90 01       	movw	r18, r0
+  c4:	69 9f       	mul	r22, r25
+  c6:	30 0d       	add	r19, r0
+  c8:	11 24       	eor	r1, r1
+  ca:	ca 01       	movw	r24, r20
+  cc:	82 1b       	sub	r24, r18
+  ce:	93 0b       	sbc	r25, r19
+  d0:	9c 01       	movw	r18, r24
+  d2:	ad ec       	ldi	r26, 0xCD	; 205
+  d4:	bc ec       	ldi	r27, 0xCC	; 204
+  d6:	08 d1       	rcall	.+528    	; 0x2e8 <__umulhisi3>
+  d8:	96 95       	lsr	r25
+  da:	87 95       	ror	r24
+  dc:	96 95       	lsr	r25
+  de:	87 95       	ror	r24
+  e0:	96 95       	lsr	r25
+  e2:	87 95       	ror	r24
+  e4:	80 93 63 00 	sts	0x0063, r24
+	R3 = number%1000/100;
+  e8:	fa 01       	movw	r30, r20
+  ea:	f6 95       	lsr	r31
+  ec:	e7 95       	ror	r30
+  ee:	f6 95       	lsr	r31
+  f0:	e7 95       	ror	r30
+  f2:	f6 95       	lsr	r31
+  f4:	e7 95       	ror	r30
+  f6:	9f 01       	movw	r18, r30
+  f8:	a5 ec       	ldi	r26, 0xC5	; 197
+  fa:	b0 e2       	ldi	r27, 0x20	; 32
+  fc:	f5 d0       	rcall	.+490    	; 0x2e8 <__umulhisi3>
+  fe:	92 95       	swap	r25
+ 100:	82 95       	swap	r24
+ 102:	8f 70       	andi	r24, 0x0F	; 15
+ 104:	89 27       	eor	r24, r25
+ 106:	9f 70       	andi	r25, 0x0F	; 15
+ 108:	89 27       	eor	r24, r25
+ 10a:	68 ee       	ldi	r22, 0xE8	; 232
+ 10c:	73 e0       	ldi	r23, 0x03	; 3
+ 10e:	86 9f       	mul	r24, r22
+ 110:	90 01       	movw	r18, r0
+ 112:	87 9f       	mul	r24, r23
+ 114:	30 0d       	add	r19, r0
+ 116:	96 9f       	mul	r25, r22
+ 118:	30 0d       	add	r19, r0
+ 11a:	11 24       	eor	r1, r1
+ 11c:	42 1b       	sub	r20, r18
+ 11e:	53 0b       	sbc	r21, r19
+ 120:	9a 01       	movw	r18, r20
+ 122:	36 95       	lsr	r19
+ 124:	27 95       	ror	r18
+ 126:	36 95       	lsr	r19
+ 128:	27 95       	ror	r18
+ 12a:	ab e7       	ldi	r26, 0x7B	; 123
+ 12c:	b4 e1       	ldi	r27, 0x14	; 20
+ 12e:	dc d0       	rcall	.+440    	; 0x2e8 <__umulhisi3>
+ 130:	96 95       	lsr	r25
+ 132:	87 95       	ror	r24
+ 134:	80 93 62 00 	sts	0x0062, r24
+	R4 = number/1000;
+ 138:	9f 01       	movw	r18, r30
+ 13a:	a5 ec       	ldi	r26, 0xC5	; 197
+ 13c:	b0 e2       	ldi	r27, 0x20	; 32
+ 13e:	d4 d0       	rcall	.+424    	; 0x2e8 <__umulhisi3>
+ 140:	92 95       	swap	r25
+ 142:	82 95       	swap	r24
+ 144:	8f 70       	andi	r24, 0x0F	; 15
+ 146:	89 27       	eor	r24, r25
+ 148:	9f 70       	andi	r25, 0x0F	; 15
+ 14a:	89 27       	eor	r24, r25
+ 14c:	80 93 61 00 	sts	0x0061, r24
+ 150:	08 95       	ret
+
+00000152 <segchar>:
+}
+
+void segchar(unsigned char seg)
+{
+	switch (seg)
+ 152:	90 e0       	ldi	r25, 0x00	; 0
+ 154:	8a 30       	cpi	r24, 0x0A	; 10
+ 156:	91 05       	cpc	r25, r1
+ 158:	a8 f5       	brcc	.+106    	; 0x1c4 <segchar+0x72>
+ 15a:	fc 01       	movw	r30, r24
+ 15c:	ed 5e       	subi	r30, 0xED	; 237
+ 15e:	ff 4f       	sbci	r31, 0xFF	; 255
+ 160:	09 94       	ijmp
+	{
+			case 1:
+			SPDR =~0b00000110;
+ 162:	89 ef       	ldi	r24, 0xF9	; 249
+ 164:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR & (1<<SPIF)));
+ 166:	77 9b       	sbis	0x0e, 7	; 14
+ 168:	fe cf       	rjmp	.-4      	; 0x166 <segchar+0x14>
+ 16a:	08 95       	ret
+			//PORTB |= (1<<PB2); //высокий уровень
+			//PORTB &= ~(1<<PB2); //низкий уровень
+			break;
+			case 2:
+			SPDR =~0b01011011;
+ 16c:	84 ea       	ldi	r24, 0xA4	; 164
+ 16e:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR & (1<<SPIF)));
+ 170:	77 9b       	sbis	0x0e, 7	; 14
+ 172:	fe cf       	rjmp	.-4      	; 0x170 <segchar+0x1e>
+ 174:	08 95       	ret
+			//PORTB |= (1<<PB2); //высокий уровень
+			//PORTB &= ~(1<<PB2); //низкий уровень
+			break;
+			case 3:
+			SPDR =~0b01001111;
+ 176:	80 eb       	ldi	r24, 0xB0	; 176
+ 178:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR & (1<<SPIF)));
+ 17a:	77 9b       	sbis	0x0e, 7	; 14
+ 17c:	fe cf       	rjmp	.-4      	; 0x17a <segchar+0x28>
+ 17e:	08 95       	ret
+			//PORTB |= (1<<PB2); //высокий уровень
+			//PORTB &= ~(1<<PB2); //низкий уровень
+			break;
+			case 4:
+			SPDR =~0b01100110;
+ 180:	89 e9       	ldi	r24, 0x99	; 153
+ 182:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR & (1<<SPIF)));
+ 184:	77 9b       	sbis	0x0e, 7	; 14
+ 186:	fe cf       	rjmp	.-4      	; 0x184 <segchar+0x32>
+ 188:	08 95       	ret
+			//PORTB |= (1<<PB2); //высокий уровень
+			//PORTB &= ~(1<<PB2); //низкий уровень
+			break;
+			case 5:
+			SPDR =~0b01101101;
+ 18a:	82 e9       	ldi	r24, 0x92	; 146
+ 18c:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR & (1<<SPIF)));
+ 18e:	77 9b       	sbis	0x0e, 7	; 14
+ 190:	fe cf       	rjmp	.-4      	; 0x18e <segchar+0x3c>
+ 192:	08 95       	ret
+			//PORTB |= (1<<PB2); //высокий уровень
+			//PORTB &= ~(1<<PB2); //низкий уровень
+			break;
+			case 6:
+			SPDR =~0b01111101;
+ 194:	82 e8       	ldi	r24, 0x82	; 130
+ 196:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR & (1<<SPIF)));
+ 198:	77 9b       	sbis	0x0e, 7	; 14
+ 19a:	fe cf       	rjmp	.-4      	; 0x198 <segchar+0x46>
+ 19c:	08 95       	ret
+			//PORTB |= (1<<PB2); //высокий уровень
+			//PORTB &= ~(1<<PB2); //низкий уровень
+			break;
+			case 7:
+			SPDR =~0b00000111;
+ 19e:	88 ef       	ldi	r24, 0xF8	; 248
+ 1a0:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR & (1<<SPIF)));
+ 1a2:	77 9b       	sbis	0x0e, 7	; 14
+ 1a4:	fe cf       	rjmp	.-4      	; 0x1a2 <segchar+0x50>
+ 1a6:	08 95       	ret
+			//PORTB |= (1<<PB2); //высокий уровень
+			//PORTB &= ~(1<<PB2); //низкий уровень
+			break;
+			case 8:
+			SPDR =~0b01111111;
+ 1a8:	80 e8       	ldi	r24, 0x80	; 128
+ 1aa:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR & (1<<SPIF)));
+ 1ac:	77 9b       	sbis	0x0e, 7	; 14
+ 1ae:	fe cf       	rjmp	.-4      	; 0x1ac <segchar+0x5a>
+ 1b0:	08 95       	ret
+			//PORTB |= (1<<PB2); //высокий уровень
+			//PORTB &= ~(1<<PB2); //низкий уровень
+			break;
+			case 9:
+			SPDR =~0b01101111;
+ 1b2:	80 e9       	ldi	r24, 0x90	; 144
+ 1b4:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR & (1<<SPIF)));
+ 1b6:	77 9b       	sbis	0x0e, 7	; 14
+ 1b8:	fe cf       	rjmp	.-4      	; 0x1b6 <segchar+0x64>
+ 1ba:	08 95       	ret
+			//PORTB |= (1<<PB2); //высокий уровень
+			//PORTB &= ~(1<<PB2); //низкий уровень
+			break;
+			case 0:
+			SPDR =~0b00111111;
+ 1bc:	80 ec       	ldi	r24, 0xC0	; 192
+ 1be:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR & (1<<SPIF)));
+ 1c0:	77 9b       	sbis	0x0e, 7	; 14
+ 1c2:	fe cf       	rjmp	.-4      	; 0x1c0 <segchar+0x6e>
+ 1c4:	08 95       	ret
+
+000001c6 <__vector_6>:
+unsigned int i;
+unsigned char R1=0, R2=0, R3=0, R4=0;
+unsigned char n_count=0;
+
+ISR(TIMER1_COMPA_vect)
+{
+ 1c6:	1f 92       	push	r1
+ 1c8:	0f 92       	push	r0
+ 1ca:	0f b6       	in	r0, 0x3f	; 63
+ 1cc:	0f 92       	push	r0
+ 1ce:	11 24       	eor	r1, r1
+ 1d0:	2f 93       	push	r18
+ 1d2:	3f 93       	push	r19
+ 1d4:	4f 93       	push	r20
+ 1d6:	5f 93       	push	r21
+ 1d8:	6f 93       	push	r22
+ 1da:	7f 93       	push	r23
+ 1dc:	8f 93       	push	r24
+ 1de:	9f 93       	push	r25
+ 1e0:	af 93       	push	r26
+ 1e2:	bf 93       	push	r27
+ 1e4:	ef 93       	push	r30
+ 1e6:	ff 93       	push	r31
+	if(n_count==0)
+ 1e8:	80 91 60 00 	lds	r24, 0x0060
+ 1ec:	81 11       	cpse	r24, r1
+ 1ee:	09 c0       	rjmp	.+18     	; 0x202 <__vector_6+0x3c>
+	{
+		segchar(R1);
+ 1f0:	80 91 64 00 	lds	r24, 0x0064
+ 1f4:	ae df       	rcall	.-164    	; 0x152 <segchar>
+		SPDR = 0b00001110;
+ 1f6:	8e e0       	ldi	r24, 0x0E	; 14
+ 1f8:	8f b9       	out	0x0f, r24	; 15
+		while(!(SPSR & (1<<SPIF)));
+ 1fa:	77 9b       	sbis	0x0e, 7	; 14
+ 1fc:	fe cf       	rjmp	.-4      	; 0x1fa <__vector_6+0x34>
+		//set_reg(0);
+		PORTB |= (1<<PB2); //высокий уровень
+ 1fe:	c2 9a       	sbi	0x18, 2	; 24
+		PORTB &= ~(1<<PB2); //низкий уровень
+ 200:	c2 98       	cbi	0x18, 2	; 24
+	}
+	if(n_count==1)
+ 202:	80 91 60 00 	lds	r24, 0x0060
+ 206:	81 30       	cpi	r24, 0x01	; 1
+ 208:	49 f4       	brne	.+18     	; 0x21c <__vector_6+0x56>
+	{
+		segchar(R2);
+ 20a:	80 91 63 00 	lds	r24, 0x0063
+ 20e:	a1 df       	rcall	.-190    	; 0x152 <segchar>
+		SPDR = 0b00001101;
+ 210:	8d e0       	ldi	r24, 0x0D	; 13
+ 212:	8f b9       	out	0x0f, r24	; 15
+		while(!(SPSR & (1<<SPIF)));
+ 214:	77 9b       	sbis	0x0e, 7	; 14
+ 216:	fe cf       	rjmp	.-4      	; 0x214 <__vector_6+0x4e>
+		//set_reg(1);
+		PORTB |= (1<<PB2); //высокий уровень
+ 218:	c2 9a       	sbi	0x18, 2	; 24
+		PORTB &= ~(1<<PB2); //низкий уровень
+ 21a:	c2 98       	cbi	0x18, 2	; 24
+	}
+	if(n_count==2)
+ 21c:	80 91 60 00 	lds	r24, 0x0060
+ 220:	82 30       	cpi	r24, 0x02	; 2
+ 222:	49 f4       	brne	.+18     	; 0x236 <__vector_6+0x70>
+	{
+		segchar(R3);
+ 224:	80 91 62 00 	lds	r24, 0x0062
+ 228:	94 df       	rcall	.-216    	; 0x152 <segchar>
+		SPDR = 0b00001011;
+ 22a:	8b e0       	ldi	r24, 0x0B	; 11
+ 22c:	8f b9       	out	0x0f, r24	; 15
+		while(!(SPSR & (1<<SPIF)));
+ 22e:	77 9b       	sbis	0x0e, 7	; 14
+ 230:	fe cf       	rjmp	.-4      	; 0x22e <__vector_6+0x68>
+		//set_reg(2);
+		PORTB |= (1<<PB2); //высокий уровень
+ 232:	c2 9a       	sbi	0x18, 2	; 24
+		PORTB &= ~(1<<PB2); //низкий уровень
+ 234:	c2 98       	cbi	0x18, 2	; 24
+	}
+	if(n_count==3)
+ 236:	80 91 60 00 	lds	r24, 0x0060
+ 23a:	83 30       	cpi	r24, 0x03	; 3
+ 23c:	49 f4       	brne	.+18     	; 0x250 <__vector_6+0x8a>
+	{
+		segchar(R4);
+ 23e:	80 91 61 00 	lds	r24, 0x0061
+ 242:	87 df       	rcall	.-242    	; 0x152 <segchar>
+		SPDR = 0b00000111;
+ 244:	87 e0       	ldi	r24, 0x07	; 7
+ 246:	8f b9       	out	0x0f, r24	; 15
+		while(!(SPSR & (1<<SPIF)));
+ 248:	77 9b       	sbis	0x0e, 7	; 14
+ 24a:	fe cf       	rjmp	.-4      	; 0x248 <__vector_6+0x82>
+		//set_reg(3);
+		PORTB |= (1<<PB2); //высокий уровень
+ 24c:	c2 9a       	sbi	0x18, 2	; 24
+		PORTB &= ~(1<<PB2); //низкий уровень
+ 24e:	c2 98       	cbi	0x18, 2	; 24
+	}
+	n_count++;
+ 250:	80 91 60 00 	lds	r24, 0x0060
+ 254:	8f 5f       	subi	r24, 0xFF	; 255
+	if(n_count>3)
+ 256:	84 30       	cpi	r24, 0x04	; 4
+ 258:	18 f4       	brcc	.+6      	; 0x260 <__vector_6+0x9a>
+		while(!(SPSR & (1<<SPIF)));
+		//set_reg(3);
+		PORTB |= (1<<PB2); //высокий уровень
+		PORTB &= ~(1<<PB2); //низкий уровень
+	}
+	n_count++;
+ 25a:	80 93 60 00 	sts	0x0060, r24
+ 25e:	02 c0       	rjmp	.+4      	; 0x264 <__vector_6+0x9e>
+	if(n_count>3)
+	{
+		n_count=0;
+ 260:	10 92 60 00 	sts	0x0060, r1
+	}
+}
+ 264:	ff 91       	pop	r31
+ 266:	ef 91       	pop	r30
+ 268:	bf 91       	pop	r27
+ 26a:	af 91       	pop	r26
+ 26c:	9f 91       	pop	r25
+ 26e:	8f 91       	pop	r24
+ 270:	7f 91       	pop	r23
+ 272:	6f 91       	pop	r22
+ 274:	5f 91       	pop	r21
+ 276:	4f 91       	pop	r20
+ 278:	3f 91       	pop	r19
+ 27a:	2f 91       	pop	r18
+ 27c:	0f 90       	pop	r0
+ 27e:	0f be       	out	0x3f, r0	; 63
+ 280:	0f 90       	pop	r0
+ 282:	1f 90       	pop	r1
+ 284:	18 95       	reti
+
+00000286 <spi_port_in>:
+#include "spi.h"
+void spi_port_in(void)
+{
+	DDRB |= ((1<<PB2)|(1<<PB3)|(1<<PB5));
+ 286:	87 b3       	in	r24, 0x17	; 23
+ 288:	8c 62       	ori	r24, 0x2C	; 44
+ 28a:	87 bb       	out	0x17, r24	; 23
+	PORTB &=~((1<<PB2)|(1<<PB3)|(1<<PB5));
+ 28c:	88 b3       	in	r24, 0x18	; 24
+ 28e:	83 7d       	andi	r24, 0xD3	; 211
+ 290:	88 bb       	out	0x18, r24	; 24
+ 292:	08 95       	ret
+
+00000294 <spi_init>:
+}
+
+void spi_init(void)
+{
+	SPCR = ((1<<SPE)|(1<<MSTR));
+ 294:	80 e5       	ldi	r24, 0x50	; 80
+ 296:	8d b9       	out	0x0d, r24	; 13
+	SPDR =0b00000000;
+ 298:	1f b8       	out	0x0f, r1	; 15
+ 29a:	08 95       	ret
+
+0000029c <main>:
+#include "main.h"
+int main(void)
+{
+	spi_port_in();
+ 29c:	f4 df       	rcall	.-24     	; 0x286 <spi_port_in>
+	spi_init();
+ 29e:	fa df       	rcall	.-12     	; 0x294 <spi_init>
+	timer_init(10);
+ 2a0:	8a e0       	ldi	r24, 0x0A	; 10
+ 2a2:	90 e0       	ldi	r25, 0x00	; 0
+ 2a4:	db de       	rcall	.-586    	; 0x5c <timer_init>
+	sei();
+ 2a6:	78 94       	sei
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 2a8:	2f ef       	ldi	r18, 0xFF	; 255
+ 2aa:	84 e3       	ldi	r24, 0x34	; 52
+ 2ac:	9c e0       	ldi	r25, 0x0C	; 12
+ 2ae:	21 50       	subi	r18, 0x01	; 1
+ 2b0:	80 40       	sbci	r24, 0x00	; 0
+ 2b2:	90 40       	sbci	r25, 0x00	; 0
+ 2b4:	e1 f7       	brne	.-8      	; 0x2ae <main+0x12>
+ 2b6:	00 c0       	rjmp	.+0      	; 0x2b8 <main+0x1c>
+ 2b8:	00 00       	nop
+	_delay_ms(500);
+    while(1)
+    {
+        for(int i=0; i<10000; i++)
+ 2ba:	c0 e0       	ldi	r28, 0x00	; 0
+ 2bc:	d0 e0       	ldi	r29, 0x00	; 0
+ 2be:	00 e0       	ldi	r16, 0x00	; 0
+ 2c0:	10 e0       	ldi	r17, 0x00	; 0
+		{
+			led_print(i);
+ 2c2:	ce 01       	movw	r24, r28
+ 2c4:	d7 de       	rcall	.-594    	; 0x74 <led_print>
+ 2c6:	2f ef       	ldi	r18, 0xFF	; 255
+ 2c8:	84 e3       	ldi	r24, 0x34	; 52
+ 2ca:	9c e0       	ldi	r25, 0x0C	; 12
+ 2cc:	21 50       	subi	r18, 0x01	; 1
+ 2ce:	80 40       	sbci	r24, 0x00	; 0
+ 2d0:	90 40       	sbci	r25, 0x00	; 0
+ 2d2:	e1 f7       	brne	.-8      	; 0x2cc <main+0x30>
+ 2d4:	00 c0       	rjmp	.+0      	; 0x2d6 <main+0x3a>
+ 2d6:	00 00       	nop
+	timer_init(10);
+	sei();
+	_delay_ms(500);
+    while(1)
+    {
+        for(int i=0; i<10000; i++)
+ 2d8:	21 96       	adiw	r28, 0x01	; 1
+ 2da:	c0 31       	cpi	r28, 0x10	; 16
+ 2dc:	27 e2       	ldi	r18, 0x27	; 39
+ 2de:	d2 07       	cpc	r29, r18
+ 2e0:	84 f3       	brlt	.-32     	; 0x2c2 <main+0x26>
+ 2e2:	c0 2f       	mov	r28, r16
+ 2e4:	d1 2f       	mov	r29, r17
+ 2e6:	ed cf       	rjmp	.-38     	; 0x2c2 <main+0x26>
+
+000002e8 <__umulhisi3>:
+ 2e8:	a2 9f       	mul	r26, r18
+ 2ea:	b0 01       	movw	r22, r0
+ 2ec:	b3 9f       	mul	r27, r19
+ 2ee:	c0 01       	movw	r24, r0
+ 2f0:	a3 9f       	mul	r26, r19
+ 2f2:	01 d0       	rcall	.+2      	; 0x2f6 <__umulhisi3+0xe>
+ 2f4:	b2 9f       	mul	r27, r18
+ 2f6:	70 0d       	add	r23, r0
+ 2f8:	81 1d       	adc	r24, r1
+ 2fa:	11 24       	eor	r1, r1
+ 2fc:	91 1d       	adc	r25, r1
+ 2fe:	08 95       	ret
+
+00000300 <_exit>:
+ 300:	f8 94       	cli
+
+00000302 <__stop_program>:
+ 302:	ff cf       	rjmp	.-2      	; 0x302 <__stop_program>

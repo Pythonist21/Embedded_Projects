@@ -1,0 +1,483 @@
+
+GccApplication12.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000025a  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          00000012  00800060  00800060  000002ce  2**0
+                  ALLOC
+  2 .comment      00000030  00000000  00000000  000002ce  2**0
+                  CONTENTS, READONLY
+  3 .debug_aranges 00000098  00000000  00000000  000002fe  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   00000424  00000000  00000000  00000396  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 000001f1  00000000  00000000  000007ba  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   0000025a  00000000  00000000  000009ab  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  0000016c  00000000  00000000  00000c08  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    00000218  00000000  00000000  00000d74  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    00000370  00000000  00000000  00000f8c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000068  00000000  00000000  000012fc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	e8 c0       	rjmp	.+464    	; 0x1e4 <__vector_9>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	15 c0       	rjmp	.+42     	; 0x48 <__vector_14>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_clear_bss>:
+  32:	20 e0       	ldi	r18, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a2 37       	cpi	r26, 0x72	; 114
+  3e:	b2 07       	cpc	r27, r18
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	fc d0       	rcall	.+504    	; 0x23c <main>
+  44:	08 c1       	rjmp	.+528    	; 0x256 <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <__vector_14>:
+extern unsigned int adc_value,adc_counter,adc_tmp;
+//----------------------------------------
+char high_adc=0,low_adc=0;
+//----------------------------------------
+ISR(ADC_vect)
+{
+  48:	1f 92       	push	r1
+  4a:	0f 92       	push	r0
+  4c:	0f b6       	in	r0, 0x3f	; 63
+  4e:	0f 92       	push	r0
+  50:	11 24       	eor	r1, r1
+  52:	2f 93       	push	r18
+  54:	3f 93       	push	r19
+  56:	4f 93       	push	r20
+  58:	6f 93       	push	r22
+  5a:	7f 93       	push	r23
+  5c:	8f 93       	push	r24
+  5e:	9f 93       	push	r25
+  60:	af 93       	push	r26
+  62:	bf 93       	push	r27
+	low_adc = ADCL;
+  64:	84 b1       	in	r24, 0x04	; 4
+  66:	80 93 60 00 	sts	0x0060, r24
+	high_adc = ADCH;//Старшая часть регистра ADC должна быть считана последней, иначе не продолжится преобразование
+  6a:	45 b1       	in	r20, 0x05	; 5
+  6c:	40 93 61 00 	sts	0x0061, r20
+	if(adc_counter<20) {adc_tmp+=high_adc;adc_counter++;}
+  70:	80 91 6b 00 	lds	r24, 0x006B
+  74:	90 91 6c 00 	lds	r25, 0x006C
+  78:	84 31       	cpi	r24, 0x14	; 20
+  7a:	91 05       	cpc	r25, r1
+  7c:	80 f4       	brcc	.+32     	; 0x9e <__vector_14+0x56>
+  7e:	20 91 69 00 	lds	r18, 0x0069
+  82:	30 91 6a 00 	lds	r19, 0x006A
+  86:	24 0f       	add	r18, r20
+  88:	31 1d       	adc	r19, r1
+  8a:	30 93 6a 00 	sts	0x006A, r19
+  8e:	20 93 69 00 	sts	0x0069, r18
+  92:	01 96       	adiw	r24, 0x01	; 1
+  94:	90 93 6c 00 	sts	0x006C, r25
+  98:	80 93 6b 00 	sts	0x006B, r24
+  9c:	19 c0       	rjmp	.+50     	; 0xd0 <__vector_14+0x88>
+	else {adc_value=adc_tmp/20;adc_counter=0;adc_tmp=0;}
+  9e:	20 91 69 00 	lds	r18, 0x0069
+  a2:	30 91 6a 00 	lds	r19, 0x006A
+  a6:	ad ec       	ldi	r26, 0xCD	; 205
+  a8:	bc ec       	ldi	r27, 0xCC	; 204
+  aa:	c9 d0       	rcall	.+402    	; 0x23e <__umulhisi3>
+  ac:	92 95       	swap	r25
+  ae:	82 95       	swap	r24
+  b0:	8f 70       	andi	r24, 0x0F	; 15
+  b2:	89 27       	eor	r24, r25
+  b4:	9f 70       	andi	r25, 0x0F	; 15
+  b6:	89 27       	eor	r24, r25
+  b8:	90 93 68 00 	sts	0x0068, r25
+  bc:	80 93 67 00 	sts	0x0067, r24
+  c0:	10 92 6c 00 	sts	0x006C, r1
+  c4:	10 92 6b 00 	sts	0x006B, r1
+  c8:	10 92 6a 00 	sts	0x006A, r1
+  cc:	10 92 69 00 	sts	0x0069, r1
+}
+  d0:	bf 91       	pop	r27
+  d2:	af 91       	pop	r26
+  d4:	9f 91       	pop	r25
+  d6:	8f 91       	pop	r24
+  d8:	7f 91       	pop	r23
+  da:	6f 91       	pop	r22
+  dc:	4f 91       	pop	r20
+  de:	3f 91       	pop	r19
+  e0:	2f 91       	pop	r18
+  e2:	0f 90       	pop	r0
+  e4:	0f be       	out	0x3f, r0	; 63
+  e6:	0f 90       	pop	r0
+  e8:	1f 90       	pop	r1
+  ea:	18 95       	reti
+
+000000ec <read_button_press>:
+	read_button_state(Button_Select);
+}
+
+unsigned char read_button_press(unsigned char b)
+{
+	switch(b)
+  ec:	82 30       	cpi	r24, 0x02	; 2
+  ee:	e1 f0       	breq	.+56     	; 0x128 <read_button_press+0x3c>
+  f0:	28 f4       	brcc	.+10     	; 0xfc <read_button_press+0x10>
+  f2:	88 23       	and	r24, r24
+  f4:	41 f0       	breq	.+16     	; 0x106 <read_button_press+0x1a>
+  f6:	81 30       	cpi	r24, 0x01	; 1
+  f8:	71 f0       	breq	.+28     	; 0x116 <read_button_press+0x2a>
+  fa:	35 c0       	rjmp	.+106    	; 0x166 <read_button_press+0x7a>
+  fc:	83 30       	cpi	r24, 0x03	; 3
+  fe:	f1 f0       	breq	.+60     	; 0x13c <read_button_press+0x50>
+ 100:	84 30       	cpi	r24, 0x04	; 4
+ 102:	39 f1       	breq	.+78     	; 0x152 <read_button_press+0x66>
+ 104:	30 c0       	rjmp	.+96     	; 0x166 <read_button_press+0x7a>
+	{
+		case Button_Right:
+		if(adc_value<25)
+ 106:	80 91 67 00 	lds	r24, 0x0067
+ 10a:	90 91 68 00 	lds	r25, 0x0068
+ 10e:	49 97       	sbiw	r24, 0x19	; 25
+ 110:	60 f5       	brcc	.+88     	; 0x16a <read_button_press+0x7e>
+			return ST_PRESSED;
+ 112:	81 e0       	ldi	r24, 0x01	; 1
+ 114:	08 95       	ret
+		else
+			return ST_UNPRESSED;
+		break;
+		case Button_Up:
+		if((adc_value>25) && (adc_value<65))
+ 116:	80 91 67 00 	lds	r24, 0x0067
+ 11a:	90 91 68 00 	lds	r25, 0x0068
+ 11e:	4a 97       	sbiw	r24, 0x1a	; 26
+ 120:	87 97       	sbiw	r24, 0x27	; 39
+ 122:	28 f5       	brcc	.+74     	; 0x16e <read_button_press+0x82>
+			return ST_PRESSED;
+ 124:	81 e0       	ldi	r24, 0x01	; 1
+ 126:	08 95       	ret
+		else
+			return ST_UNPRESSED;
+		break;
+		case Button_Down:
+		if((adc_value>65) && (adc_value<115)) 
+ 128:	80 91 67 00 	lds	r24, 0x0067
+ 12c:	90 91 68 00 	lds	r25, 0x0068
+ 130:	82 54       	subi	r24, 0x42	; 66
+ 132:	91 09       	sbc	r25, r1
+ 134:	c1 97       	sbiw	r24, 0x31	; 49
+ 136:	e8 f4       	brcc	.+58     	; 0x172 <read_button_press+0x86>
+			return ST_PRESSED;
+ 138:	81 e0       	ldi	r24, 0x01	; 1
+ 13a:	08 95       	ret
+		else
+			return ST_UNPRESSED;
+		break;
+		case Button_Left:
+		if((adc_value>115) && (adc_value<180))
+ 13c:	80 91 67 00 	lds	r24, 0x0067
+ 140:	90 91 68 00 	lds	r25, 0x0068
+ 144:	84 57       	subi	r24, 0x74	; 116
+ 146:	91 09       	sbc	r25, r1
+ 148:	80 34       	cpi	r24, 0x40	; 64
+ 14a:	91 05       	cpc	r25, r1
+ 14c:	a0 f4       	brcc	.+40     	; 0x176 <read_button_press+0x8a>
+			return ST_PRESSED;
+ 14e:	81 e0       	ldi	r24, 0x01	; 1
+ 150:	08 95       	ret
+		else
+			return ST_UNPRESSED;
+		break;
+		case Button_Select:
+		if((adc_value>180) && (adc_value<230))
+ 152:	80 91 67 00 	lds	r24, 0x0067
+ 156:	90 91 68 00 	lds	r25, 0x0068
+ 15a:	85 5b       	subi	r24, 0xB5	; 181
+ 15c:	91 09       	sbc	r25, r1
+ 15e:	c1 97       	sbiw	r24, 0x31	; 49
+ 160:	60 f4       	brcc	.+24     	; 0x17a <read_button_press+0x8e>
+			return ST_PRESSED;
+ 162:	81 e0       	ldi	r24, 0x01	; 1
+ 164:	08 95       	ret
+		else
+			return ST_UNPRESSED;
+		break;
+	}
+	return ST_ERROR;
+ 166:	84 e0       	ldi	r24, 0x04	; 4
+ 168:	08 95       	ret
+	{
+		case Button_Right:
+		if(adc_value<25)
+			return ST_PRESSED;
+		else
+			return ST_UNPRESSED;
+ 16a:	82 e0       	ldi	r24, 0x02	; 2
+ 16c:	08 95       	ret
+		break;
+		case Button_Up:
+		if((adc_value>25) && (adc_value<65))
+			return ST_PRESSED;
+		else
+			return ST_UNPRESSED;
+ 16e:	82 e0       	ldi	r24, 0x02	; 2
+ 170:	08 95       	ret
+		break;
+		case Button_Down:
+		if((adc_value>65) && (adc_value<115)) 
+			return ST_PRESSED;
+		else
+			return ST_UNPRESSED;
+ 172:	82 e0       	ldi	r24, 0x02	; 2
+ 174:	08 95       	ret
+		break;
+		case Button_Left:
+		if((adc_value>115) && (adc_value<180))
+			return ST_PRESSED;
+		else
+			return ST_UNPRESSED;
+ 176:	82 e0       	ldi	r24, 0x02	; 2
+ 178:	08 95       	ret
+		break;
+		case Button_Select:
+		if((adc_value>180) && (adc_value<230))
+			return ST_PRESSED;
+		else
+			return ST_UNPRESSED;
+ 17a:	82 e0       	ldi	r24, 0x02	; 2
+		break;
+	}
+	return ST_ERROR;
+}
+ 17c:	08 95       	ret
+
+0000017e <read_button_state>:
+
+void read_button_state(unsigned char b)
+{
+ 17e:	1f 93       	push	r17
+ 180:	cf 93       	push	r28
+ 182:	df 93       	push	r29
+	if ((button_state[b]&ST_LOCKED)!=0) return;
+ 184:	c8 2f       	mov	r28, r24
+ 186:	d0 e0       	ldi	r29, 0x00	; 0
+ 188:	fe 01       	movw	r30, r28
+ 18a:	e3 59       	subi	r30, 0x93	; 147
+ 18c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 18e:	10 81       	ld	r17, Z
+ 190:	15 fd       	sbrc	r17, 5
+ 192:	24 c0       	rjmp	.+72     	; 0x1dc <read_button_state+0x5e>
+	if(read_button_press(b)==ST_UNPRESSED)
+ 194:	ab df       	rcall	.-170    	; 0xec <read_button_press>
+ 196:	82 30       	cpi	r24, 0x02	; 2
+ 198:	89 f4       	brne	.+34     	; 0x1bc <read_button_state+0x3e>
+	{
+		if (but_cnt[b]>0)
+ 19a:	fe 01       	movw	r30, r28
+ 19c:	ee 59       	subi	r30, 0x9E	; 158
+ 19e:	ff 4f       	sbci	r31, 0xFF	; 255
+ 1a0:	80 81       	ld	r24, Z
+ 1a2:	88 23       	and	r24, r24
+ 1a4:	19 f0       	breq	.+6      	; 0x1ac <read_button_state+0x2e>
+		{
+			but_cnt[b]--;
+ 1a6:	81 50       	subi	r24, 0x01	; 1
+ 1a8:	80 83       	st	Z, r24
+ 1aa:	18 c0       	rjmp	.+48     	; 0x1dc <read_button_state+0x5e>
+		}
+		else
+		{
+			if ((button_state[b]&ST_PRESSED)!=0)
+ 1ac:	10 ff       	sbrs	r17, 0
+ 1ae:	16 c0       	rjmp	.+44     	; 0x1dc <read_button_state+0x5e>
+			{
+				button_state[b] |= ST_UNPRESSURE;
+				button_state[b] &= ~ST_PRESSED;
+				button_state[b] |= ST_UNPRESSED;
+ 1b0:	c3 59       	subi	r28, 0x93	; 147
+ 1b2:	df 4f       	sbci	r29, 0xFF	; 255
+		else
+		{
+			if ((button_state[b]&ST_PRESSED)!=0)
+			{
+				button_state[b] |= ST_UNPRESSURE;
+				button_state[b] &= ~ST_PRESSED;
+ 1b4:	1e 7f       	andi	r17, 0xFE	; 254
+				button_state[b] |= ST_UNPRESSED;
+ 1b6:	12 61       	ori	r17, 0x12	; 18
+ 1b8:	18 83       	st	Y, r17
+ 1ba:	10 c0       	rjmp	.+32     	; 0x1dc <read_button_state+0x5e>
+			}
+		}
+	}
+	else
+	{
+		if (but_cnt[b]<5)
+ 1bc:	fe 01       	movw	r30, r28
+ 1be:	ee 59       	subi	r30, 0x9E	; 158
+ 1c0:	ff 4f       	sbci	r31, 0xFF	; 255
+ 1c2:	80 81       	ld	r24, Z
+ 1c4:	85 30       	cpi	r24, 0x05	; 5
+ 1c6:	18 f4       	brcc	.+6      	; 0x1ce <read_button_state+0x50>
+		{
+			but_cnt[b]++;
+ 1c8:	8f 5f       	subi	r24, 0xFF	; 255
+ 1ca:	80 83       	st	Z, r24
+ 1cc:	07 c0       	rjmp	.+14     	; 0x1dc <read_button_state+0x5e>
+		}
+		else
+		{
+			if ((button_state[b]&ST_UNPRESSED)!=0)
+ 1ce:	11 ff       	sbrs	r17, 1
+ 1d0:	05 c0       	rjmp	.+10     	; 0x1dc <read_button_state+0x5e>
+
+			{
+				button_state[b] |= ST_PRESSURE;
+				button_state[b] &= ~ST_UNPRESSED;
+				button_state[b] |= ST_PRESSED;
+ 1d2:	c3 59       	subi	r28, 0x93	; 147
+ 1d4:	df 4f       	sbci	r29, 0xFF	; 255
+		{
+			if ((button_state[b]&ST_UNPRESSED)!=0)
+
+			{
+				button_state[b] |= ST_PRESSURE;
+				button_state[b] &= ~ST_UNPRESSED;
+ 1d6:	1d 7f       	andi	r17, 0xFD	; 253
+				button_state[b] |= ST_PRESSED;
+ 1d8:	19 60       	ori	r17, 0x09	; 9
+ 1da:	18 83       	st	Y, r17
+
+			}
+		}
+	}
+}
+ 1dc:	df 91       	pop	r29
+ 1de:	cf 91       	pop	r28
+ 1e0:	1f 91       	pop	r17
+ 1e2:	08 95       	ret
+
+000001e4 <__vector_9>:
+	TIMSK |=(1<<TOIE0);
+	TCCR0 |=(0<<CS02)|(1<<CS01)|(1<<CS00);
+}
+
+ISR(TIMER0_OVF_vect)
+{
+ 1e4:	1f 92       	push	r1
+ 1e6:	0f 92       	push	r0
+ 1e8:	0f b6       	in	r0, 0x3f	; 63
+ 1ea:	0f 92       	push	r0
+ 1ec:	11 24       	eor	r1, r1
+ 1ee:	2f 93       	push	r18
+ 1f0:	3f 93       	push	r19
+ 1f2:	4f 93       	push	r20
+ 1f4:	5f 93       	push	r21
+ 1f6:	6f 93       	push	r22
+ 1f8:	7f 93       	push	r23
+ 1fa:	8f 93       	push	r24
+ 1fc:	9f 93       	push	r25
+ 1fe:	af 93       	push	r26
+ 200:	bf 93       	push	r27
+ 202:	ef 93       	push	r30
+ 204:	ff 93       	push	r31
+	read_button_state(Button_Right);
+ 206:	80 e0       	ldi	r24, 0x00	; 0
+ 208:	ba df       	rcall	.-140    	; 0x17e <read_button_state>
+	read_button_state(Button_Up);
+ 20a:	81 e0       	ldi	r24, 0x01	; 1
+ 20c:	b8 df       	rcall	.-144    	; 0x17e <read_button_state>
+	read_button_state(Button_Down);
+ 20e:	82 e0       	ldi	r24, 0x02	; 2
+ 210:	b6 df       	rcall	.-148    	; 0x17e <read_button_state>
+	read_button_state(Button_Left);
+ 212:	83 e0       	ldi	r24, 0x03	; 3
+ 214:	b4 df       	rcall	.-152    	; 0x17e <read_button_state>
+	read_button_state(Button_Select);
+ 216:	84 e0       	ldi	r24, 0x04	; 4
+ 218:	b2 df       	rcall	.-156    	; 0x17e <read_button_state>
+}
+ 21a:	ff 91       	pop	r31
+ 21c:	ef 91       	pop	r30
+ 21e:	bf 91       	pop	r27
+ 220:	af 91       	pop	r26
+ 222:	9f 91       	pop	r25
+ 224:	8f 91       	pop	r24
+ 226:	7f 91       	pop	r23
+ 228:	6f 91       	pop	r22
+ 22a:	5f 91       	pop	r21
+ 22c:	4f 91       	pop	r20
+ 22e:	3f 91       	pop	r19
+ 230:	2f 91       	pop	r18
+ 232:	0f 90       	pop	r0
+ 234:	0f be       	out	0x3f, r0	; 63
+ 236:	0f 90       	pop	r0
+ 238:	1f 90       	pop	r1
+ 23a:	18 95       	reti
+
+0000023c <main>:
+#include "main.h"
+
+int main(void)
+{
+ 23c:	ff cf       	rjmp	.-2      	; 0x23c <main>
+
+0000023e <__umulhisi3>:
+ 23e:	a2 9f       	mul	r26, r18
+ 240:	b0 01       	movw	r22, r0
+ 242:	b3 9f       	mul	r27, r19
+ 244:	c0 01       	movw	r24, r0
+ 246:	a3 9f       	mul	r26, r19
+ 248:	01 d0       	rcall	.+2      	; 0x24c <__umulhisi3+0xe>
+ 24a:	b2 9f       	mul	r27, r18
+ 24c:	70 0d       	add	r23, r0
+ 24e:	81 1d       	adc	r24, r1
+ 250:	11 24       	eor	r1, r1
+ 252:	91 1d       	adc	r25, r1
+ 254:	08 95       	ret
+
+00000256 <_exit>:
+ 256:	f8 94       	cli
+
+00000258 <__stop_program>:
+ 258:	ff cf       	rjmp	.-2      	; 0x258 <__stop_program>
